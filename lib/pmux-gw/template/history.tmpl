@@ -1,0 +1,101 @@
+<html>
+  <head>
+    <title>pmux-gw history</title>
+    <link rel="stylesheet" type="text/css" href="/css/jquery-ui-1.9.2.custom.css" /> 
+    <style type="text/css">
+    <!--
+    table, th, tr, td {border: 1px #888888 solid;}
+    tr, td {margin: 3px; padding: 5px;}
+    --> 
+    </style>
+    <script type="text/javascript" src="/js/jquery-1.8.3.js"></script>
+    <script type="text/javascript" src="/js/jquery-ui-1.9.2.custom.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+      var dialog_selector = $("#dialog").dialog({ autoOpen: false, width: "90%", modal: true, title: "Detail" });
+      $(".detail").click(function() {
+          var target_selector = $(this);
+          var req_params = {
+              "client" : target_selector.attr('data-client'),
+              "pid" : target_selector.attr('data-pid'),
+              "mapper" : target_selector.attr('data-mapper'),
+              "start-datetime" : target_selector.attr('data-start'),
+              "date" : target_selector.attr('data-date')
+          };
+          $.ajax({
+              type: "POST",
+              url: "/task",
+              cache: false,
+              data: req_params,
+              dataType: "text",
+              success: function(data, dataType) {
+                  var dialog_body = data;
+                  dialog_body = dialog_body.replace(/^/g, "<table><tr><td>");
+                  dialog_body = dialog_body.replace(/\t/g, "</td><td>");
+                  dialog_body = dialog_body.replace(/\n/g, "</td></tr><tr><td>");
+                  dialog_body = dialog_body.replace(/<tr><td>$/, "</table>");
+                  dialog_selector.html(dialog_body);
+                  dialog_selector.dialog("open");
+              },
+              error : function(XMLHttpRequest, textStatus, errorThrown) { 
+                  var dialog_body = textStatus + ": " + XMLHttpRequest.status + " " + XMLHttpRequest.statusText + "<br>";
+                  dialog_body += XMLHttpRequest.responseText;
+                  dialog_selector.html(dialog_body);
+                  dialog_selector.dialog("open");
+              }
+          });
+      });
+    });
+    </script>
+  </head>
+  <body>
+    <form method="POST" action="/history">
+      <table>
+        <tr>
+          <td>start date</td>
+          <td><input type="text" id="start-date" name="start-date" value="<%= start_date.strftime(@@date_format) %>"/></td>
+        </tr>
+        <tr>
+          <td>end date</td>
+          <td><input type="text" id="end-date" name="end-date" value="<%= end_date.strftime(@@date_format) %>"/></td>
+        </tr>
+        <tr>
+          <td>client</td>
+          <td><input type="text" name="client" value="<%= client %>"/></td>
+        </tr>
+        <tr>
+          <td>pid</td>
+          <td><input type="text" name="pid" value="<%= pid %>"/></td>
+        </tr>
+        <tr>
+          <td>mapper</td>
+          <td><input type="text" name="mapper" value="<%= mapper %>"/></td>
+        </tr>
+        <tr>
+          <td colspan="2"><input type="submit" value="search"></td>
+        </tr>
+      </table>
+    </form><br>
+    current runnning tasks: <%= @@task_cnt %><br>
+    <table>
+      <thead>
+        <tr>
+          <%- (1..labels.length - 1).each do |i| -%>
+            <th><%= labels[i] %></th>
+          <%- end -%>
+        </tr>
+      </thrad>
+      <tbody>
+        <%- history_id_order.each do |id| -%>
+          <tr>
+            <%- (1..history[id].length - 1).each do |i| -%>
+              <td><%= history[id][i] %></td>
+            <%- end -%>
+            <td><button class="detail" <%- (0..history[id].length - 1).each do |i| -%> data-<%= labels[i] %>="<%= history[id][i] %>" <%- end -%>>show</botton></td>
+          </tr>
+        <%- end-%>
+      </tbody>
+    </table>
+    <div id="dialog"></div>
+  </body>
+</html>

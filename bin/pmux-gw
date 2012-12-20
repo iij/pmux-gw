@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require 'pmux-gw'
+
+app = Pmux::Gateway::Application.new()
+app.run()
