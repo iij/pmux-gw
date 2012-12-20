@@ -5,7 +5,7 @@
 %define ruby_verid %{_ruby_verid}
 %endif
 %define rbname pmux-gw
-%define version 0.1.0
+%define version 0.1.2
 %define release 1
 
 Summary: Pmux gateway server

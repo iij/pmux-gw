@@ -201,7 +201,7 @@ module Pmux
               # 終了フラグが立っていると終了処理
               if @term 
                 HttpHandler.set_term()
-                if HttpHandler.get_task_cnt() == 0:
+                if HttpHandler.get_task_cnt() == 0
                   @logger.logging("info", "shutdown...")
                   @periodic_timer.cancel()
                   @history.finish()
