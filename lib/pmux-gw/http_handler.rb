@@ -141,7 +141,7 @@ module Pmux
       def build_command
         # パラメータからpmuxコマンドの生成する
         mapper = nil
-        opt_list = ["/usr/local/bin/ruby193", "/usr/local/bin/pmux"]
+        opt_list = [$config["pmux_path"]]
         file_list = []
         for attr in @@param_attr
           if !attr["multi"]
