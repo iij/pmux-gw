@@ -5,7 +5,7 @@
 %define ruby_verid %{_ruby_verid}
 %endif
 %define rbname pmux-gw
-%define version 0.0.1
+%define version 0.1.0
 %define release 1
 
 Summary: Pmux gateway server
@@ -19,14 +19,15 @@ URL: https://github.com/iij/pmux-gw
 Source0: %{rbname}-%{version}.gem
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 Requires: ruby 
-Requires: rubygems >= 1.3.7
-Requires: rubygems-gflocator 
-Requires: rubygems-pmux 
-Requires: rubygems-eventmachine 
-Requires: rubygems-em_pessimistic 
-Requires: rubygems-eventmachine_httpserver 
+Requires: rubygems%(echo -n %{ruby_verid}) >= 1.3.7
+Requires: rubygems%(echo -n %{ruby_verid})-gflocator  >= 0.0.1
+Requires: rubygems%(echo -n %{ruby_verid})-pmux >= 0.1.0
+Requires: rubygems%(echo -n %{ruby_verid})-eventmachine => 1.0
+Requires: rubygems%(echo -n %{ruby_verid})-eventmachine < 2
+Requires: rubygems%(echo -n %{ruby_verid})-em_pessimistic >= 0.1.2
+Requires: rubygems%(echo -n %{ruby_verid})-eventmachine_httpserver > 0.2.1 
 BuildRequires: ruby 
-BuildRequires: rubygems >= 1.3.7
+BuildRequires: rubygems%(echo -n %{ruby_verid}) >= 1.3.7
 BuildArch: noarch
 Provides: ruby(Pmux-gateway) = %{version}
 
@@ -88,6 +89,7 @@ rmdir %{gembuilddir}/bin
 %{gemdir}/gems/%{rbname}-%{version}/lib/pmux-gw/static/js/jquery-1.8.3.js
 %{gemdir}/gems/%{rbname}-%{version}/lib/pmux-gw/static/js/jquery-ui-1.9.2.custom.js
 %{gemdir}/gems/%{rbname}-%{version}/lib/pmux-gw/logger_wrapper.rb
+%{gemdir}/gems/%{rbname}-%{version}/lib/pmux-gw/syslog_wrapper.rb
 %{gemdir}/gems/%{rbname}-%{version}/examples/pmux-gw.conf
 %{gemdir}/gems/%{rbname}-%{version}/examples/password
 %{gemdir}/gems/%{rbname}-%{version}/rpm/pmux-gw.spec

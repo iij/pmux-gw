@@ -17,9 +17,9 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  gem.add_dependency('gflocator')
-  gem.add_dependency('pmux')
-  gem.add_dependency('eventmachine')
-  gem.add_dependency('em_pessimistic')
-  gem.add_dependency('eventmachine_httpserver')
+  gem.add_dependency('gflocator', '>= 0.0.1')
+  gem.add_dependency('pmux', '>= 0.1.1')
+  gem.add_dependency('eventmachine', '~> 1.0')
+  gem.add_dependency('em_pessimistic', '>= 0.1.2')
+  gem.add_dependency('eventmachine_httpserver', '>= 0.2.1')
 end
