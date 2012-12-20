@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["kakine@iij.ad.jp"]
   gem.description   = %q{Pmux gateway is an executor for Pmux through HTTP request}
   gem.summary       = %q{Pmux gateway server}
-  gem.homepage      = ""
+  gem.homepage      = "https://github.com/iij/pmux-gw"
 
   gem.files         = `find . -maxdepth 1 -name '.gitignore' -prune -o -type f -print; find {bin,lib,examples,rpm} -name '.svn' -prune -o -type f -print`.map { |f| f.strip().sub("./", "") }
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
