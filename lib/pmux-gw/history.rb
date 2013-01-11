@@ -53,7 +53,7 @@ module Pmux
         end
         new_last_rotate = Date.today()
         if new_last_rotate.day != @last_rotate.day || @reset
-          @file_path = build_file_path(@last_rotate)
+          @file_path = build_file_path(@new_last_rotate)
           if !@fp.nil?
             @fp.close()
             @fp = nil
