@@ -441,11 +441,11 @@ module Pmux
           end
         rescue Exception => e
           # 予期しない例外は500を返し、ログに残しておく
+          @logger.logging("error", "error occurred in http handler: #{e}")
+          @logger.logging("error", e.backtrace.join("\n"))
           error_response({:status => 500,
                           :content_type => "text/plain",
                           :content => "error: #{e}"}) 
-          @logger.logging("error", "error occurred in http handler: #{e}")
-          @logger.logging("error", e.backtrace.join("\n"))
         end
       end
     end

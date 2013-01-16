@@ -53,7 +53,6 @@ module Pmux
         end
         new_last_rotate = Date.today()
         if new_last_rotate.day != @last_rotate.day || @reset
-          @file_path = build_file_path(@new_last_rotate)
           if !@fp.nil?
             @fp.close()
             @fp = nil
@@ -61,6 +60,7 @@ module Pmux
             @logger.logging("error", "can not close file, file object is nil")
           end
           begin
+            @file_path = build_file_path(new_last_rotate)
             @fp = open(@file_path, "a") 
             @last_rotate = new_last_rotate
             @reset = false

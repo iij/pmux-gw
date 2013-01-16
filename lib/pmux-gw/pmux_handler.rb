@@ -58,7 +58,7 @@ module Pmux
           # pmux実行のステータスコードが0でない場合はその値とstderrを返す
           @cc.response.content_type("application/octet-stream")
           if @cc.content_too_big
-            @cc.response.status = 500
+            @cc.response.status = 507
             @cc.response.content = "#{retcode}\r\ntoo big response data size with detect error (#{@cc.stdout_data.length} byte)"
           elsif retcode == 0
             @cc.response.status = 200
