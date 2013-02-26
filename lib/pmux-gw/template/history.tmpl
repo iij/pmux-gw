@@ -15,7 +15,7 @@
       var dialog_selector = $("#dialog").dialog({ autoOpen: false,
                                                   width: "94%",
                                                   title: "Detail",
-                                                  resizable: false,
+                                                  resizable: true,
                                                   position: {my: "center top+10", at: "center top+10", of: window },
                                                   buttons: [{text: "close", click: function() { $(this).dialog("close"); }}] });
       $(".detail").click(function() {
