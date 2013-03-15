@@ -1,5 +1,5 @@
 module Pmux
   module Gateway
-    VERSION = "0.1.6"
+    VERSION = "0.1.12"
   end
 end

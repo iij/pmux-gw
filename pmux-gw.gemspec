@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{Pmux gateway server}
   gem.homepage      = "https://github.com/iij/pmux-gw"
 
-  gem.files         = `find . -maxdepth 1 -name '.gitignore' -prune -o -type f -print; find {bin,lib,examples,rpm} -name '.svn' -prune -o -type f -print`.split().map{ |f| f.strip().sub("./", "") }
+  gem.files         = `find . -maxdepth 1 -name '.gitignore' -prune -o -type f -print; find {bin,lib,conf,rpm} -name '.svn' -prune -o -type f -print`.split().map{ |f| f.strip().sub("./", "") }
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]

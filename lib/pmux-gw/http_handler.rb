@@ -74,7 +74,7 @@ module Pmux
           @cc.end_datetime = DateTime.now().new_offset(Rational(9, 24))
           # pmuxが終わっていないのにクライアントとの接続が切れたらpmuxを終了する
           if !@cc.pmux_terminated
-            @cc.pmux_handler.close_connection()
+            @cc.pmux_handler.close_connection() if !@cc.pmux_handler.nil?
             @cc.force_pmux_terminated = true
             @cc.status = "disconnected"
           else
@@ -274,18 +274,18 @@ module Pmux
           return
         end
         @cc = ClientContext.new(self, @response, mapper, cmd, is_detect_error())
-        @cc.set_pmux_handler(EMPessimistic.popen3(cmd, PmuxHandler, @cc))
-        @@task_cnt += 1
         #ステータス情報を保存しておく
-        @cc.pid = @cc.pmux_handler.get_status.pid
+        @@task_cnt += 1
         @cc.status = "runnning"
         @cc.start_datetime = DateTime.now().new_offset(Rational(9, 24))
         @cc.peername = "#{@peer_ip} - #{@peer_port}"
         @cc.user = @auth_user
+        @cc.set_pmux_handler(EMPessimistic.popen3(cmd, PmuxHandler, @cc))
+        @cc.pid = @cc.pmux_handler.get_status.pid
         #ヒストリー情報を更新する
         @history.save(@cc)
       end 
-    
+
       def resource_existence
         # リソース/existenceが呼ばれた際の処理
         success_response({:status => 204,
@@ -315,7 +315,7 @@ module Pmux
           start_date = default_start_date
           end_date = default_end_date
         end
-        history, history_id_order = @history.load(client, pid, mapper, "", start_date, end_date, false, true)
+        history, history_id_order = @history.load(client, pid, mapper, "", start_date, end_date, false, true, true)
         labels = ["date", "client", "user", "pid", "mapper", "start", "end", "elapsed", "status", "detail" ]
         # templateがまだ読み込まれてなければtemplateを読み込む
         if @@history_template.nil?
@@ -358,7 +358,7 @@ module Pmux
                           :content => "invalid date string"})
           return
         end
-        history, history_id_order = @history.load(client, pid, mapper, start_datetime, start_date, end_date, true, false)
+        history, history_id_order = @history.load(client, pid, mapper, start_datetime, start_date, end_date, true, false, false)
         if history_id_order.length < 1
           error_response({:status => 404,
                           :content_type => "text/plain",

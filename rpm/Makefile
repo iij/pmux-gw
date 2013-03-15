@@ -13,6 +13,7 @@ rpmbuild: clean
 	mkdir -p SPECS
 	mkdir -p INSTALL
 	cp ../pkg/pmux-gw-*.gem SOURCES/
+	cp pmux-gw SOURCES/
 	rpmbuild -ba --define "_topdir $(TOP_DIR)" --define "_ruby_verid \"$(RUBY_VERID)\"" pmux-gw.spec
 
 clean:

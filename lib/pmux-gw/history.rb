@@ -97,14 +97,21 @@ module Pmux
         end
       end
     
-      def is_skip elems, peername, pid, mapper, start_datetime
-        return true if !peername.nil? && peername != "" &&  /#{peername}/ !~ elems[1]
-        return true if !pid.nil? && pid != "" && /#{pid}/ !~ elems[3]
-        return true if !mapper.nil? && mapper != "" && /#{mapper}/ !~ elems[4]
+      def is_skip elems, peername, pid, mapper, start_datetime, use_regex
+        if use_regex
+          return true if !peername.nil? && peername != "" &&  /#{peername}/ !~ elems[1]
+          return true if !pid.nil? && pid != "" && /#{pid}/ !~ elems[3]
+          return true if !mapper.nil? && mapper != "" && /#{mapper}/ !~ elems[4]
+        else
+          return true if !peername.nil? && peername != "" &&  peername != elems[1]
+          return true if !pid.nil? && pid != "" && pid != elems[3]
+          return true if !mapper.nil? && mapper != "" && mapper != elems[4]
+        end
         return true if !start_datetime.nil? && start_datetime != "" && start_datetime != elems[5] 
+        return false
       end
     
-      def load peername, pid, mapper, start_datetime, start_date, end_date, need_command = false, html_escape = false
+      def load peername, pid, mapper, start_datetime, start_date, end_date, need_command = false, html_escape = false, use_regex=false
         # 指定された期間のログファイルからデータを読み込む
         # フォーマット(タブ区切り):
         #   id\tpeername\tuser\tpid\tmapper\tstart_datetime\tend_datetime\telapsed\tstatus\tcommand\n
@@ -118,7 +125,7 @@ module Pmux
             open(file_path) {|file|
               while line = file.gets() do
                 elems = line.chomp().split("\t")
-                next if is_skip(elems, peername, pid, mapper, start_datetime)
+                next if is_skip(elems, peername, pid, mapper, start_datetime, use_regex)
                 id = elems.shift()
                 command = elems.pop() if !need_command
                 elems.unshift(start_date.to_s)

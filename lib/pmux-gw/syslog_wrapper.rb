@@ -45,12 +45,18 @@ module Pmux
           Syslog.debug("[#{id}] #{msg}")
         when "info"
           Syslog.info("[#{id}] #{msg}")
+        when "notice"
+          Syslog.notice("[#{id}] #{msg}")
         when "warn"
-          Syslog.warn("[#{id}] #{msg}")
+          Syslog.warning("[#{id}] #{msg}")
         when "error"
-          Syslog.error("[#{id}] #{msg}")
+          Syslog.err("[#{id}] #{msg}")
         when "fatal"
-          Syslog.fatal("[#{id}] #{msg}")
+          Syslog.crit("[#{id}] #{msg}")
+        when "alert"
+          Syslog.alert("[#{id}] #{msg}")
+        when "emerg"
+          Syslog.emerg("[#{id}] #{msg}")
         end
       end
     end

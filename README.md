@@ -4,7 +4,7 @@
 
 ## Requirements
 
-  * ruby 1.8.7, 1.9.3 or higher
+  * ruby 1.8.7, 1.9.1 or higher
   * pmux 
   * gflocator 
   * eventmachine 
@@ -62,8 +62,8 @@
 ### Create an environment that can use pmux-gw
 
   mkdir /etc/pmux-gw  
-  cp <pmux-geteway-install-path>/examples/pmux-gw.conf /etc/pmux-gw/pmux-gw.conf  
-  cp <pmux-geteway-install-path>/examples/password /etc/pmux-gw/password  
+  cp <pmux-geteway-install-path>/conf/pmux-gw.conf /etc/pmux-gw/pmux-gw.conf  
+  cp <pmux-geteway-install-path>/conf/password /etc/pmux-gw/password  
   chown -R admin:admin /etc/pmux-gw/password  
   chmod -R 600 /etc/pmux-gw/password  
   pmux-gw  
@@ -136,6 +136,22 @@
 
   Resources to monitor the presence of process
      
+## Package createting
+
+  * create gem
+  $ make
+
+  * install
+  # make install
+    or 
+  # gem install pkg//pmux-gw-*.gem
+
+  * create rpm
+  $ make rpmbuild
+
+  * install rpm
+  $ rpm -ivh rpm/RPMS/noarch/rubygems-pmux-gw-*.noarch.rpm
+
 ## Links
  * Glusterfs
    * http://www.gluster.org/

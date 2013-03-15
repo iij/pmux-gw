@@ -8,6 +8,7 @@ module Pmux
     class Application
       def initialize
         @config_file_path = "/etc/pmux-gw/pmux-gw.conf"
+        @pidfile = "/var/run/pmux-gw.pid"
         @foreground = false
         @reload = false
         @term = false
@@ -138,6 +139,10 @@ module Pmux
     
         # コンフィグの読み込み
         load_config()
+
+        # pidfile作成
+        @pidfile = $config["pidfile"] if $config["pidfile"]
+        open(@pidfile, 'w') {|f| f << Process.pid } if @pidfile
     
         # ユーザーとグループの情報を取得する
         user = Etc.getpwnam($config["user"])
