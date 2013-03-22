@@ -25,7 +25,7 @@ Requires: rubygem%(echo -n %{ruby_verid})-pmux
 Requires: rubygem%(echo -n %{ruby_verid})-eventmachine => 1.0
 Requires: rubygem%(echo -n %{ruby_verid})-eventmachine < 2
 Requires: rubygem%(echo -n %{ruby_verid})-em_pessimistic >= 0.1.2
-Requires: rubygem%(echo -n %{ruby_verid})-eventmachine_httpserver > 0.2.1 
+Requires: rubygem%(echo -n %{ruby_verid})-eventmachine_httpserver >= 0.2.1 
 BuildRequires: ruby 
 BuildArch: noarch
 Provides: ruby(Pmux-gateway) = %{version}
